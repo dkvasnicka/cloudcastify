@@ -6,6 +6,33 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          metadata-complete="false">
 
-         
+    <context-param>
+        <param-name>org.basex.restxqpath</param-name>
+        <param-value>WEB-INF/xqm</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>org.basex.httplocal</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>org.basex.user</param-name>
+        <param-value>admin</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.basex.password</param-name>
+        <param-value>admin</param-value>
+    </context-param>
+
+    <!--  RESTXQ Service (can be deactivated by removing this entry) -->
+    <servlet>
+        <servlet-name>RESTXQ</servlet-name>
+        <servlet-class>org.basex.http.restxq.RestXqServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RESTXQ</servlet-name>
+        <url-pattern>/app/*</url-pattern>
+    </servlet-mapping>         
 </web-app>
 
