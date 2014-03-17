@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>title</title>
+    <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Raleway:300,400" />
+    <style type="text/css">
+        body {
+            padding: 30px;
+            width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-family: "Raleway";
+        }
+
+        h2 {
+            color: green;
+        }
+
+        input {
+            width: 500px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#load").click(function() {
+                $("#tracks").empty();
+                $("#tracks").append("<li>Loading...</li>");
+                $.post("/app/spotify", $("#frm").serialize()).done(function(data) {                    
+                    $("#tracks").empty();
+                    if (data.length == 0) {
+                        $("#tracks").append("<li>No matching tracks :(</li>");
+                    } else {
+                        $.each(data, function(i, v) {
+                            $("#tracks").append("<li><iframe src=\"https://embed.spotify.com/?uri=" + v.href
+                                + "\" width=\"300\" height=\"80\" frameborder=\"0\" allowtransparency=\"true\"></iframe></li>")
+                        })
+                    }
+                });    
+            })
+        });
+    </script>
+  </head>
+  <body>
+    <h1>cloudcastify</h1>
+    <h2>mixcloud &amp; spotify mashup</h2>
+
+    <p>Enter a Mixcloud cloudcast URL (e.g. http://www.mixcloud.com/bobbyelvis/classic-christmas/). 
+    The cloudcast needs to have a tracklist.</p>
+    <form id="frm"><input name="url" type="text" /></form> <button id="load">Load tracks from Spotify</button>
+    <ul id="tracks"></ul>
+  </body>
+</html>
